@@ -1,6 +1,7 @@
 # 自动打包docker镜像
 ```
-当目标机器不方便连接互联网时，可用该脚本在方便联网的机器上导出指定的镜像，需要指定平台版本
+当目标机器不方便连接互联网时，可使用该脚本在方便联网的机器上，快捷下载并导出指定的镜像，且对镜像文件命名和压缩
+可在Codespaces尝试
 ```
 
 ## 如何确定latest目前对应的版本
@@ -10,7 +11,7 @@ docker image inspect mysql:latest | grep -i version
 ```
 
 ## 使用示例
-
+需要在脚本后指定：镜像名，版本，平台完整名称（由空格隔开的三个参数）
 ```
 ./saveimg.sh mysql 8.0.37 linux/arm64
 ```
@@ -19,8 +20,14 @@ docker image inspect mysql:latest | grep -i version
 ```
 最终输出的文件类似于
 ```
-mysql_8.0.37_linux_amd64.tar.gz
+mysql_8.0.37_linux_arm64.tar.gz
 ```
 ```
 portainer_portainer_latest_linux_amd64.tar.gz
 ```
+将文件放在目标机器上，使用命令导入
+```
+docker load -i mysql_8.0.37_linux_arm64.tar.gz
+```
+## 说明
+该脚本使用AI编写，是对docker pull和docker save的简单封装
