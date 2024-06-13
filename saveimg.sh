@@ -24,14 +24,14 @@ TAG=$2
 PLATFORM=$3
 
 # 验证镜像名称和标签格式
-if [[ ! ${IMAGE_NAME} =~ ^[a-z0-9]+([._-]?[a-z0-9]+)*$ || ! ${TAG} =~ ^[a-zA-Z0-9._-]+$ ]]; then
+if [[ ! ${IMAGE_NAME} =~ ^[a-z0-9]+([._/-]?[a-z0-9]+)*$ || ! ${TAG} =~ ^[a-zA-Z0-9._-]+$ ]]; then
     echo "Error: 镜像名称或标签格式不正确。"
     exit 1
 fi
 
 # 生成导出文件名
 PLATFORM_SUFFIX=$(echo ${PLATFORM} | tr '/' '_')
-TAR_FILE="${IMAGE_NAME}_${TAG}_${PLATFORM_SUFFIX}.tar"
+TAR_FILE="${IMAGE_NAME//\//_}_${TAG}_${PLATFORM_SUFFIX}.tar"
 GZ_FILE="${TAR_FILE}.gz"
 
 # 检查是否已经存在相同的文件
