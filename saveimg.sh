@@ -13,15 +13,15 @@ if ! docker info &> /dev/null; then
 fi
 
 # 检查参数数量是否正确
-if [ "$#" -ne 3 ]; then
-    echo "用法: $0 <镜像名称> <标签> <平台>"
+if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+    echo "用法: $0 <镜像名称> <标签> [平台]"
     exit 1
 fi
 
 # 获取传递的参数
 IMAGE_NAME=$1
 TAG=$2
-PLATFORM=$3
+PLATFORM=${3:-linux/amd64}  # 默认为 linux/amd64
 
 # 验证镜像名称和标签格式
 if [[ ! ${IMAGE_NAME} =~ ^[a-z0-9]+([._/-]?[a-z0-9]+)*$ || ! ${TAG} =~ ^[a-zA-Z0-9._-]+$ ]]; then
